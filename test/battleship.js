@@ -4,6 +4,7 @@ const expect = require('chai').expect
 const app = require('../app')
 const battleship = require('../battleship')
 
+
 describe('Battleship lib', () => {
   describe('#createGame()', () => {
     it('should return game info', (done) => {
@@ -127,6 +128,54 @@ describe('Battleship lib', () => {
           expect(error).exist
           expect(error.message).eql('all ships has been deployed')
           done()
+        })
+      })
+    })
+  })
+
+  describe('#attack()', () => {
+    it('should return `Miss` and save to missGrids', (done) => {
+      battleship.createGame((error, game) => {
+        expect(error).not.exist
+        const options = {
+          row: 1,
+          column: 6,
+          ship: 'battleship'
+        }
+        battleship.deploy(game.gameId, options, (deployError, game) => {
+          expect(deployError).not.exist
+          battleship.attack(game.gameId, { row: 1, column: 1 }, (error, result) => {
+            expect(error).not.exist
+            expect(result).eql('Miss')
+            battleship.getGameInfo(game.gameId, (error, game) => {
+              expect(error).not.exist
+              expect(game.attacker.missGrids.includes(1)).ok
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    it('should return `Hit` and save to hitGrids', (done) => {
+      battleship.createGame((error, game) => {
+        expect(error).not.exist
+        const options = {
+          row: 1,
+          column: 1,
+          ship: 'battleship'
+        }
+        battleship.deploy(game.gameId, options, (deployError, game) => {
+          expect(deployError).not.exist
+          battleship.attack(game.gameId, { row: 1, column: 1 }, (error, result) => {
+            expect(error).not.exist
+            expect(result).eql('Hit')
+            battleship.getGameInfo(game.gameId, (error, game) => {
+              expect(error).not.exist
+              expect(game.attacker.hitGrids.includes(1)).ok
+              done()
+            })
+          })
         })
       })
     })

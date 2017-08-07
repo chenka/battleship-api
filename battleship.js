@@ -2,6 +2,9 @@ const _ = require('lodash')
 const Game = require('./models/game')
 
 module.exports = battleship =  {
+  getGameInfo(gameId, callback) {
+    Game.findOne({ gameId }, callback)
+  },
   toGrid(row, column) {
     return (10 * (row - 1)) + column
   },
@@ -176,7 +179,6 @@ function getAdjacent(options) {
   let adj
   if (options.isVertical) {
     adj = verticalAdjacent(options)
-    console.log()
   } else {
     adj = horizontalAdjacent(options)
   }
