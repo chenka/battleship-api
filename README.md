@@ -11,18 +11,76 @@ MongoDB
 npm install
 npm start
 ```
+## Example Data Structure
+    [{ 
+        "gameId" : 178, 
+        "attacker" : {
+            "hitGrids" : [
+
+            ], 
+            "missGrids" : [
+                50, 
+                1
+            ]
+        }, 
+        "defender" : {
+            "placements" : [
+                {
+                    "grids" : [
+                        74
+                    ], 
+                    "ship" : "submarine"
+                }
+            ], 
+            "ships" : {
+                "battleship" : {
+                    "name" : "battleship", 
+                    "amount" : 1, 
+                    "size" : 4
+                }, 
+                "cruiser" : {
+                    "name" : "cruiser", 
+                    "amount" : 2, 
+                    "size" : 3
+                }, 
+                "destroyer" : {
+                    "name" : "destroyer", 
+                    "amount" : 3, 
+                    "size" : 2
+                }, 
+                "submarine" : {
+                    "name" : "submarine", 
+                    "amount" : 3, 
+                    "size" : 1
+                }
+            }
+        }, 
+        "occupyGrids" : [
+            74
+        ], 
+        "adjacentGrids" : [
+            63, 
+            73, 
+            83, 
+            64, 
+            84, 
+            65, 
+            75, 
+            85
+        ], 
+        "size" : 10
+    }]
+
 
 ## API
 
-Create game:
-
-`POST /games`
+### POST /games
+Create game
 
     curl http://localhost:3000/games
 
-Deploy ships:
-
-`POST /deploy/:gameId`
+### POST /deploy/:gameId
+Deploy ships
 
     curl -X POST \
       http://localhost:3000/deploy/:gameId \
@@ -34,10 +92,8 @@ Deploy ships:
       "isVertical": true
     }'
 
-
-Attack ships:
-
-`POST /attack/:gameId`
+### POST /attack/:gameId
+Attack ships
 
     curl -X POST \
       http://localhost:3000/attack/178 \
@@ -53,7 +109,7 @@ Attack ships:
 ## User Interface
 ![image](https://user-images.githubusercontent.com/837612/29033923-d5221eba-7bc0-11e7-9c34-8e5133ce5ff6.png)
 
-You can view game result at `/grids/:gameID
+You can view game result at `/grids/:gameID`
 
 
 ## Running the simulation
