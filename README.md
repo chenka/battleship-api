@@ -1,5 +1,5 @@
 # battleship-api
-For interview
+API for battleship game
 
 ## Prerequisites
 Node.js
