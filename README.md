@@ -21,7 +21,16 @@ npm start
 
 `POST /attack/:gameId`
 
-`GET /grids/:gameID`
+
+## User Interface
+You can view game result at `/grids/:gameID
+
+
+## Running the simulation
+You have to start app by `npm start` before simulate.
+Open new terminal and run `npm run simulate`
+
+
 
 ## Running the tests
 `npm test`
