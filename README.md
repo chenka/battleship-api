@@ -96,7 +96,7 @@ Deploy ships
 Attack ships
 
     curl -X POST \
-      http://localhost:3000/attack/178 \
+      http://localhost:3000/attack/:gameId \
       -H 'content-type: application/json' \
       -d '{
         "row": 5,
