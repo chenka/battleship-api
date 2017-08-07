@@ -189,3 +189,12 @@ Visit simulation result at http://localhost:3000/grids/177
 
 ## Running the tests
 `npm test`
+
+## Todo
+- [ ] Clean code
+- [ ] return 404 when gameId not found
+- [ ] Add more unit test
+- [ ] Clear database before run test
+- [ ] Seperate database on each environment by create config.js
+- [ ] Setup code coverage
+- [ ] Attack and Deploy ship from user interface
