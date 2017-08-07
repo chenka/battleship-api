@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  
+  .container
+    .row
+      .defender.col-md-6
+        h1.text-center Defender
+        .board
+          table
+            - let row = 0
+            while row < game.size
+              - row++
+              tr
+                - let column = 0
+                while column < game.size
+                  - column++
+                  - const grid = ((10*(row-1))+column)
+                  td.text-center.grid(class={
+                    occupied: game.occupyGrids.includes(grid),
+                    adjacent: game.adjacentGrids.includes(grid)
+                    })
+                    p #{grid}
+                    p #{row} | #{column}
+      .attacker.col-md-6
+        h1.text-center Attacker
+        .board
+          table
+            - row = 0
+            while row < game.size
+              - row++
+              tr
+                - column = 0
+                while column < game.size
+                  - column++
+                  - const grid = ((10*(row-1))+column)
+                  td.text-center.grid(class={
+                    miss: game.attacker.missGrids.includes(grid),
+                    hit: game.attacker.hitGrids.includes(grid)
+                    })
+                    p #{grid}
+                    p #{row} | #{column}
+
