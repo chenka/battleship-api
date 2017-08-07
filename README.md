@@ -13,13 +13,39 @@ npm start
 ```
 
 ## API
-`POST /attack/:gameId`
 
-`POST /deploy/:gameId`
+Create game:
 
 `POST /games`
 
+    curl http://localhost:3000/attack/:gameId
+
+Deploy ships:
+
 `POST /attack/:gameId`
+
+    curl -X POST \
+      http://localhost:3000/deploy/:gameId \
+      -H 'content-type: application/json' \
+      -d '{
+      "row": 8,
+      "column": 4,
+      "ship": "submarine",
+      "isVertical": true
+    }'
+
+
+Attack ships:
+
+`POST /attack/:gameId`
+
+    curl -H "Content-Type: application/json" -X POST -d \
+        '{
+           "row": 1,
+           "column": 1
+         }' http://localhost:3000/attack/:gameId
+    {"message": "Hit"}
+
 
 
 ## User Interface
