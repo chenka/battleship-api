@@ -20,6 +20,7 @@ instance.post('/games', {})
   .then((message) => {
     console.log('==== Game End ===')
     console.log(`Visit simulation result at http://localhost:3000/grids/${gameId}`)
+    EXITCONDITION = true
   })
   .catch((error) => {
     console.error(error)

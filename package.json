@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "./node_modules/mocha/bin/mocha test",
+    "simulate": "node simulate.js"
   },
   "dependencies": {
     "async": "^2.5.0",
