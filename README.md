@@ -18,11 +18,11 @@ Create game:
 
 `POST /games`
 
-    curl http://localhost:3000/attack/:gameId
+    curl http://localhost:3000/games
 
 Deploy ships:
 
-`POST /attack/:gameId`
+`POST /deploy/:gameId`
 
     curl -X POST \
       http://localhost:3000/deploy/:gameId \
@@ -39,11 +39,13 @@ Attack ships:
 
 `POST /attack/:gameId`
 
-    curl -H "Content-Type: application/json" -X POST -d \
-        '{
-           "row": 1,
-           "column": 1
-         }' http://localhost:3000/attack/:gameId
+    curl -X POST \
+      http://localhost:3000/attack/178 \
+      -H 'content-type: application/json' \
+      -d '{
+        "row": 5,
+        "column": 10
+    }'
     {"message": "Hit"}
 
 
