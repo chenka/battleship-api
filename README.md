@@ -192,6 +192,7 @@ Visit simulation result at http://localhost:3000/grids/177
 
 ## Todo
 - [ ] Clean code
+- [ ] Prevent attack before all ships has been deployed
 - [ ] return 404 when gameId not found
 - [ ] Add more unit test
 - [ ] Clear database before run test
