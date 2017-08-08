@@ -82,7 +82,7 @@ function bulkDeploy(gameId, callback) {
   })
 }
 
-function bulkAttack(gameId, callback) {
+function bulkAttack(gameId) {
   const actions = [
     [1, 1],
     [1, 2],
@@ -118,6 +118,7 @@ function bulkAttack(gameId, callback) {
     return instance.post(`/attack/${gameId}`, {
       row,
       column
-    })
+    }).then(response => console.log(response.data.message))
+    
   })
 }
