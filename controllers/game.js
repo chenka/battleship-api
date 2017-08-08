@@ -5,15 +5,17 @@ module.exports = {
       const game = await battleship.createGame()
       res.json(game)
     } catch (error) {  
-      res.status(400).json({ error: error.message })
+      error.status = 400
+      next(error)
     }
   },
-  async deploy(req, res) {
+  async deploy(req, res, next) {
     try {
       const game = await battleship.deploy(req.params.gameId, req.body)
       res.json(game)
     } catch (error) {
-      res.status(400).json({ error: error.message })
+      error.status = 400
+      next(error)
     }
   },
   async attack(req, res) {
@@ -21,7 +23,8 @@ module.exports = {
       const message = await battleship.attack(req.params.gameId, req.body)
       res.json({ message })
     } catch (error) {
-      res.status(400).json({ error: error.message })
+      error.status = 400
+      next(error)
     }
 
   }
