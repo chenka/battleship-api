@@ -1,21 +1,28 @@
 const battleship = require('../battleship')
 module.exports = {
-  createGame(req, res) {
-    battleship.createGame((error, game) => {
-      if (error) return res.status(400).json({ error: error.message })
+  async createGame(req, res) {
+    try {
+      const game = await battleship.createGame()
       res.json(game)
-    })
+    } catch (error) {  
+      res.status(400).json({ error: error.message })
+    }
   },
-  deploy(req, res) {
-    battleship.deploy(req.params.gameId, req.body, (error, game) => {
-      if (error) return res.status(400).json({ error: error.message })
+  async deploy(req, res) {
+    try {
+      const game = await battleship.deploy(req.params.gameId, req.body)
       res.json(game)
-    })
+    } catch (error) {
+      res.status(400).json({ error: error.message })
+    }
   },
-  attack(req, res) {
-    battleship.attack(req.params.gameId, req.body, (error, message) => {
-      if (error) return res.status(400).json({ error: error.message })
+  async attack(req, res) {
+    try {
+      const message = await battleship.attack(req.params.gameId, req.body)
       res.json({ message })
-    })
+    } catch (error) {
+      res.status(400).json({ error: error.message })
+    }
+
   }
 }

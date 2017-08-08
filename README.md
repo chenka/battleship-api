@@ -2,13 +2,13 @@
 API for battleship game
 
 ## Prerequisites
-Node.js
+Node.js version 8.x
 
 MongoDB
 
 ## Installing
 ```
-npm install
+DEBUG=battleship:* npm install
 npm start
 ```
 ## Example Data Structure
