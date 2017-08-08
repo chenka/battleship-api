@@ -1,5 +1,6 @@
 const axios = require('axios')
 const async = require('async')
+const Promise = require('bluebird')
 const instance = axios.create({
   baseURL: 'http://localhost:3000/'
 })
@@ -13,14 +14,14 @@ async function main() {
     await bulkAttack(response.data.gameId)
     console.log(`Visit simulation result at http://localhost:3000/grids/${gameId}`)
   } catch (error) {
-    console.error(error,'<<<<<<<<<<<')
+    console.error(error)
   }
 }
 
 main()
 
 function bulkDeploy(gameId, callback) {
-  const arr = [
+  const actions = [
     {
       row: 1,
       column: 1,
@@ -75,68 +76,48 @@ function bulkDeploy(gameId, callback) {
       ship: 'submarine',
     }
   ]
-
-  return new Promise((resolve, reject) => {
-    async.eachSeries(arr, (options, done) => {
-      console.log(`deploy: deployed ${options.ship} to row: ${options.row}, column: ${options.column}`)
-      instance.post(`/deploy/${gameId}`, options)
-        .then(() => done())
-        .catch(done)
-    }, (error) => {
-      if (error) return reject(error)
-      resolve(error)
-    })
+  return Promise.each(actions, (item) => {
+    console.log(`deploy: deployed ${item.ship} to row: ${item.row}, column: ${item.column}`)
+    return instance.post(`/deploy/${gameId}`, item)
   })
 }
 
 function bulkAttack(gameId, callback) {
-    const arr = [
-      [1, 1],
-      [1, 2],
-      [1, 3],
-      [1, 4],
-      [9, 10],
-      [1, 6],
-      [1, 8],
-      [1, 8],
-      [2, 6],
-      [2, 8],
-      [3, 6],
-      [1, 10],
-      [2, 10],
-      [3, 10],
-      [5, 1],
-      [6, 1],
-      [10, 1],
-      [10, 2],
-      [7, 3],
-      [10, 9],
-      [10, 10],
-      [9, 5],
-      [5, 10],
-      [6, 5],
-      [6, 7],
-      [7, 9]
-    ]
-
-  return new Promise((resolve, reject) => {
-    async.eachSeries(arr, (options, done) => {
-      const row = options[0]
-      const column = options[1]
-      console.log(`attack: row: ${row} col: ${column}`)
-      instance.post(`/attack/${gameId}`, {
-        row,
-        column
-      })
-        .then((response) => {
-          result = response.data.message
-          console.log(`attack: ${result}`)
-          done()
-        })
-        .catch(done)
-    }, (error) => {
-      if (error) return reject(error)
-      resolve()
+  const actions = [
+    [1, 1],
+    [1, 2],
+    [1, 3],
+    [1, 4],
+    [9, 10],
+    [1, 6],
+    [1, 8],
+    [1, 8],
+    [2, 6],
+    [2, 8],
+    [3, 6],
+    [1, 10],
+    [2, 10],
+    [3, 10],
+    [5, 1],
+    [6, 1],
+    [10, 1],
+    [10, 2],
+    [7, 3],
+    [10, 9],
+    [10, 10],
+    [9, 5],
+    [5, 10],
+    [6, 5],
+    [6, 7],
+    [7, 9]
+  ]
+  return Promise.each(actions, (item) => {
+    const row = item[0]
+    const column = item[1]
+    console.log(`attack: row: ${row} col: ${column}`)
+    return instance.post(`/attack/${gameId}`, {
+      row,
+      column
     })
   })
 }
