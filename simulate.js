@@ -1,16 +1,19 @@
 const axios = require('axios')
 const async = require('async')
 const Promise = require('bluebird')
+const chalk = require('chalk')
 const instance = axios.create({
   baseURL: 'http://localhost:3000/'
 })
 
 async function main() {
-  console.log('==== Start Game ===')
+  console.log('###### Start Game ######')
   try {
     const response = await instance.post('/games')
     const gameId = response.data.gameId
+    console.log('==== Deploying ===')
     await bulkDeploy(response.data.gameId)
+    console.log('==== Attacking ===')
     await bulkAttack(response.data.gameId)
     console.log(`Visit simulation result at http://localhost:3000/grids/${gameId}`)
   } catch (error) {
@@ -118,7 +121,17 @@ function bulkAttack(gameId) {
     return instance.post(`/attack/${gameId}`, {
       row,
       column
-    }).then(response => console.log(response.data.message))
+    }).then((response) => {
+      const message = response.data.message
+      if (message === 'Hit') {
+        console.log(chalk.red(message))
+      } else if (message === 'Miss') {
+        console.log(chalk.gray(message))
+      } else {
+        console.log(chalk.green(message))
+      }
+      
+    })
     
   })
 }
