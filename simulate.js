@@ -4,86 +4,76 @@ const instance = axios.create({
   baseURL: 'http://localhost:3000/'
 })
 
-let EXITCONDITION = false
-
-let gameId
-console.log('==== Start Game ===')
-instance.post('/games', {})
-  .then((response) => {
-    gameId = response.data.gameId
-    console.log(`Created new game. gameId is ${gameId}`)
-    return bulkDeploy(gameId)
-  })
-  .then(() => {
-    return bulkAttack(gameId)
-  })
-  .then((message) => {
-    console.log('==== Game End ===')
+async function main() {
+  console.log('==== Start Game ===')
+  try {
+    const response = await instance.post('/games')
+    const gameId = response.data.gameId
+    await bulkDeploy(response.data.gameId)
+    await bulkAttack(response.data.gameId)
     console.log(`Visit simulation result at http://localhost:3000/grids/${gameId}`)
-    EXITCONDITION = true
-  })
-  .catch((error) => {
-    console.error(error)
-    EXITCONDITION = true
-  })
+  } catch (error) {
+    console.error(error,'<<<<<<<<<<<')
+  }
+}
 
-
+main()
 
 function bulkDeploy(gameId, callback) {
-    const arr = [
-      {
-        row: 1,
-        column: 1,
-        ship: 'battleship'
-      },
-      {
-        row: 1,
-        column: 6,
-        ship: 'cruiser',
-        isVertical: true
-      },
-      {
-        row: 1,
-        column: 10,
-        ship: 'cruiser',
-        isVertical: true
-      },
-      {
-        row: 5,
-        column: 1,
-        ship: 'destroyer',
-        isVertical: true
-      },
-      {
-        row: 10,
-        column: 1,
-        ship: 'destroyer',
-      },
-      {
-        row: 10,
-        column: 9,
-        ship: 'destroyer',
-      },
-      {
-        row: 6,
-        column: 5,
-        ship: 'submarine',
-      },
-      {
-        row: 6,
-        column: 7,
-        ship: 'submarine',
-      },
-      {
-        row: 5,
-        column: 10,
-        ship: 'submarine',
-      },
-      {
-        row: 7,
-        column: 9,
-        ship: 'submarine',
-      }
+  const arr = [
+    {
+      row: 1,
+      column: 1,
+      ship: 'battleship'
+    },
+    {
+      row: 1,
+      column: 6,
+      ship: 'cruiser',
+      isVertical: true
+    },
+    {
+      row: 1,
+      column: 10,
+      ship: 'cruiser',
+      isVertical: true
+    },
+    {
+      row: 5,
+      column: 1,
+      ship: 'destroyer',
+      isVertical: true
+    },
+    {
+      row: 10,
+      column: 1,
+      ship: 'destroyer',
+    },
+    {
+      row: 10,
+      column: 9,
+      ship: 'destroyer',
+    },
+    {
+      row: 6,
+      column: 5,
+      ship: 'submarine',
+    },
+    {
+      row: 6,
+      column: 7,
+      ship: 'submarine',
+    },
+    {
+      row: 5,
+      column: 10,
+      ship: 'submarine',
+    },
+    {
+      row: 7,
+      column: 9,
+      ship: 'submarine',
+    }
   ]
 
   return new Promise((resolve, reject) => {
@@ -150,10 +140,3 @@ function bulkAttack(gameId, callback) {
     })
   })
 }
-
-
-function wait () {
-  if (!EXITCONDITION)
-    setTimeout(wait, 1000)
-}
-wait()
