@@ -77,7 +77,7 @@ npm start
 ### POST /games
 Create game
 
-    curl http://localhost:3000/games
+    curl -X POST http://localhost:3000/games
 
 ### POST /deploy/:gameId
 Deploy ships
